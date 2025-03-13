@@ -4,7 +4,7 @@ Parameters:
   Prefix:
     Description: A prefix identifier for the VPC
     Type: String
-    Default: iac-lab-cfn-yaml
+    Default: iac-lab-cfn-yaml-vld
 
   Environment:
     Description: An environment name, e.g. dev, test, uat

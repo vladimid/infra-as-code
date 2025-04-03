@@ -1,7 +1,4 @@
 
-# prefix = "session2"
-
-
 variable "prefix" {
   type        = string
   description = "prefix"

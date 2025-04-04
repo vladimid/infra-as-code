@@ -1,11 +1,10 @@
+resource "aws_dynamodb_table" "terraform_locks" {
+  name         = format("%s-tfstate-locks", var.prefix)
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
 
-terraform {
-  backend "s3" {
-    bucket = "vld-iac-lab-tfstate"
-    key    = "terraform.tfstate"
-    region = "eu-north-1"
-
-    dynamodb_table = "vld-iac-lab-dynamodb_table"
-    encrypt        = true
+  attribute {
+    name = "LockID"
+    type = "S"
   }
 }

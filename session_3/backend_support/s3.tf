@@ -20,7 +20,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "vld-server-side-e
   }
 }
 
-
 resource "aws_s3_bucket_public_access_block" "vld_s3_bucket_public_access_block" {
   bucket = aws_s3_bucket.vld-s3-bucket.id
 }
+

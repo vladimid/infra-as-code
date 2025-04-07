@@ -20,7 +20,7 @@ resource "aws_subnet" "subnet_public_1" {
   availability_zone = format("%sa", var.region)
 
   tags = {
-    Name = format("%s-%s-public-subnet-1", var.prefix, var.subnet1_cidr)
+    Name = format("%s-%s-public-subnet-1", var.prefix, var.region)
   }
 }
 
@@ -32,7 +32,7 @@ resource "aws_subnet" "subnet_public_2" {
   availability_zone = format("%sb", var.region)
 
   tags = {
-    Name = format("%s-%s-public-subnet-2", var.prefix, var.subnet2_cidr)
+    Name = format("%s-%s-public-subnet-2", var.prefix, var.region)
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "subnet_private_1" {
   availability_zone       = format("%sa", var.region)
 
   tags = {
-    Name = format("%s-%s-private-subnet-1", var.prefix, var.subnet3_cidr)
+    Name = format("%s-%s-private-subnet-1", var.prefix, var.region)
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_subnet" "subnet_private_2" {
   availability_zone       = format("%sb", var.region)
 
   tags = {
-    Name = format("%s-%s-private-subnet-2", var.prefix, var.subnet4_cidr)
+    Name = format("%s-%s-private-subnet-2", var.prefix, var.region)
   }
 }
 
@@ -67,7 +67,7 @@ resource "aws_subnet" "subnet_secure_1" {
   availability_zone       = format("%sb", var.region)
 
   tags = {
-    Name = format("%s-%s-secure-subnet-2", var.prefix, var.subnet5_cidr)
+    Name = format("%s-%s-secure-subnet-2", var.prefix, var.region)
   }
 }
 
@@ -78,7 +78,7 @@ resource "aws_subnet" "subnet_secure_2" {
   availability_zone       = format("%sb", var.region)
 
   tags = {
-    Name = format("%s-%s-secure-subnet-2", var.prefix, var.subnet6_cidr)
+    Name = format("%s-%s-secure-subnet-2", var.prefix, var.region)
   }
 }
 #########################################################

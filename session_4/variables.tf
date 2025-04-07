@@ -4,65 +4,53 @@
 
 variable "prefix" {
   type        = string
-  description = "prefix"
+  description = "Prefix"
 }
 
 variable "region" {
   type        = string
-  description = "region"
+  description = "Region"
 }
 
 
 variable "vpc_cidr" {
   type        = string
-  description = "vpc_cidr"
+  description = "VPC CIDR"
 }
 
 
 variable "subnet1_cidr" {
   type        = string
-  description = "subnet1_cidr"
+  description = "Subnet 1 CIDR"
 }
 
 
-# variable "subnet2_cidr" {
-#   type        = string
-#   description = "subnet2_cidr"
-# }
-#
-#
-# variable "subnet3_cidr" {
-#   type        = string
-#   description = "subnet3_cidr"
-# }
-#
-#
-# variable "subnet4_cidr" {
-#   type        = string
-#   description = "subnet4_cidr"
-# }
-#
-#
-# variable "subnet5_cidr" {
-#   type        = string
-#   description = "subnet5_cidr"
-# }
-#
-#
-# variable "subnet6_cidr" {
-#   type        = string
-#   description = "subnet6_cidr"
-# }
-#
-# variables "subnet_names" {
-#   description = "subnet_names"
-#   type        = list(string)
-#   default     = ["subnet1_cidr", "subnet2_cidr", "subnet3_cidr", "subnet4_cidr", "subnet5_cidr", "subnet6_cidr"]
-#
-# }
-
-variable "subnet_names" {
-  description = "subnet_names"
-  type        = list(string)
-  default     = ["subnet1_cidr", "subnet2_cidr", "subnet3_cidr", "subnet4_cidr", "subnet5_cidr", "subnet6_cidr"]
+variable "subnet2_cidr" {
+  type        = string
+  description = "Subnet 2 CIDR"
 }
+
+
+variable "subnet3_cidr" {
+  type        = string
+  description = "Subnet 3 CIDR"
+}
+
+
+variable "subnet4_cidr" {
+  type        = string
+  description = "Subnet 4 CIDR"
+}
+
+
+variable "subnet5_cidr" {
+  type        = string
+  description = "Subnet 5 CIDR"
+}
+
+
+variable "subnet6_cidr" {
+  type        = string
+  description = "Subnet 6 CIDR"
+}
+

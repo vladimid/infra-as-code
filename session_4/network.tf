@@ -5,7 +5,6 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = "true"
   instance_tenancy     = "default"
   tags = {
-    # Name = format("%s-%s-vpc", var.prefix, vld.this.id)
     Name = format("%s-%s-vpc", var.prefix, var.vpc_cidr)
   }
 }

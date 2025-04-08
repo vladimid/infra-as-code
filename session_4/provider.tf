@@ -6,6 +6,9 @@ resource "aws_vpc" "main" {
   instance_tenancy     = "default"
   tags = {
     Name = "${var.prefix}-vpc"
+    ManagedBy = "Terraform"
+    Project = var.prefix
+    Environment = "Dev"
   }
 }
 

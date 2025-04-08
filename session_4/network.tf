@@ -11,73 +11,17 @@ resource "aws_vpc" "vpc" {
 }
 
 
-resource "aws_subnet" "subnet_public_1" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet1_cidr
-  map_public_ip_on_launch = "true"
-  availability_zone = format("%sa", var.region)
+resource "aws_subnet" "subnets" {
+  for_each = tomap({
+    for subnet in var.subnets : subnet.name => subnet
+  })
 
   tags = {
-    Name = format("%s-%s-public-subnet-1", var.prefix, var.region)
+    Name = format("%s-%s-%s", var.prefix, var.region, each.key)
   }
-}
 
-
-resource "aws_subnet" "subnet_public_2" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet2_cidr
-  map_public_ip_on_launch = "true"
-  availability_zone = format("%sb", var.region)
-
-  tags = {
-    Name = format("%s-%s-public-subnet-2", var.prefix, var.region)
-  }
-}
-
-
-resource "aws_subnet" "subnet_private_1" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet3_cidr
-  map_public_ip_on_launch = "false"
-  availability_zone       = format("%sa", var.region)
-
-  tags = {
-    Name = format("%s-%s-private-subnet-1", var.prefix, var.region)
-  }
-}
-
-
-resource "aws_subnet" "subnet_private_2" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet4_cidr
-  map_public_ip_on_launch = "false"
-  availability_zone       = format("%sb", var.region)
-
-  tags = {
-    Name = format("%s-%s-private-subnet-2", var.prefix, var.region)
-  }
-}
-
-resource "aws_subnet" "subnet_secure_1" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet5_cidr
-  map_public_ip_on_launch = "false"
-  availability_zone       = format("%sb", var.region)
-
-  tags = {
-    Name = format("%s-%s-secure-subnet-2", var.prefix, var.region)
-  }
-}
-
-resource "aws_subnet" "subnet_secure_2" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet6_cidr
-  map_public_ip_on_launch = "false"
-  availability_zone       = format("%sb", var.region)
-
-  tags = {
-    Name = format("%s-%s-secure-subnet-2", var.prefix, var.region)
-  }
+  vpc_id = aws_vpc.vpc.id
+  cidr_block = each.value.cidr_block
 }
 
 
@@ -94,18 +38,18 @@ resource "aws_eip" "elastic-ip" {
     Name = format("%s-elastic-ip", var.prefix)
   }
 }
-
-resource "aws_nat_gateway" "nat-gateway" {
-  allocation_id = aws_eip.elastic-ip.id
-  subnet_id     = aws_subnet.subnet_private_2.id
-  tags = {
-    Name = format("%s-nat-gateway", var.prefix)
-  }
-
-  # To ensure proper ordering, it is recommended to add an explicit dependency
-  # on the Internet Gateway for the VPC.
-  depends_on = [aws_eip.elastic-ip]
-}
+#
+# resource "aws_nat_gateway" "nat-gateway" {
+#   allocation_id = aws_eip.elastic-ip.id
+#   subnet_id     = aws_subnet.private_subnet_2.id
+#   tags = {
+#     Name = format("%s-nat-gateway", var.prefix)
+#   }
+#
+#   # To ensure proper ordering, it is recommended to add an explicit dependency
+#   # on the Internet Gateway for the VPC.
+#   depends_on = [aws_eip.elastic-ip]
+# }
 
 
 resource "aws_route_table" "public-route-table" {
@@ -120,35 +64,35 @@ resource "aws_route_table" "public-route-table" {
   }
 }
 
-resource "aws_route_table" "private-route-table" {
-  vpc_id                  = aws_vpc.vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat-gateway.id
-  }
-
-  tags = {
-    Name = format("%s-route-table", var.prefix)
-  }
-}
-
-
-resource "aws_route_table_association" "subnet_public_1" {
-  subnet_id      = aws_subnet.subnet_public_1.id
-  route_table_id = aws_route_table.public-route-table.id
-}
-
-resource "aws_route_table_association" "subnet_public_2" {
-  subnet_id      = aws_subnet.subnet_public_2.id
-  route_table_id = aws_route_table.public-route-table.id
-}
-
-resource "aws_route_table_association" "subnet_private_1" {
-  subnet_id      = aws_subnet.subnet_private_1.id
-  route_table_id = aws_route_table.private-route-table.id
-}
-
-resource "aws_route_table_association" "subnet_private_2" {
-  subnet_id      = aws_subnet.subnet_private_2.id
-  route_table_id = aws_route_table.private-route-table.id
-}
+# resource "aws_route_table" "private-route-table" {
+#   vpc_id                  = aws_vpc.vpc.id
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     gateway_id = aws_nat_gateway.nat-gateway.id
+#   }
+#
+#   tags = {
+#     Name = format("%s-route-table", var.prefix)
+#   }
+# }
+#
+#
+# resource "aws_route_table_association" "public_subnet_1" {
+#   subnet_id      = aws_subnet.public_subnet_1.id
+#   route_table_id = aws_route_table.public-route-table.id
+# }
+#
+# resource "aws_route_table_association" "public_subnet_2" {
+#   subnet_id      = aws_subnet.public_subnet_2.id
+#   route_table_id = aws_route_table.public-route-table.id
+# }
+#
+# resource "aws_route_table_association" "private_subnet_1" {
+#   subnet_id      = aws_subnet.private_subnet_1.id
+#   route_table_id = aws_route_table.private-route-table.id
+# }
+#
+# resource "aws_route_table_association" "private_subnet_2" {
+#   subnet_id      = aws_subnet.private_subnet_2.id
+#   route_table_id = aws_route_table.private-route-table.id
+# }

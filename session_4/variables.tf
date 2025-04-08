@@ -1,6 +1,4 @@
 
-# prefix = "session2"
-
 
 variable "prefix" {
   type        = string
@@ -19,38 +17,62 @@ variable "vpc_cidr" {
 }
 
 
-variable "subnet1_cidr" {
-  type        = string
-  description = "Subnet 1 CIDR"
+variable "subnet_cidr" {
+  type        = list(string)
+  description = "List of CIDR blocks for public subnets"
+
+  default = ["subnet_cidr1", "subnet_cidr2"]
+  # default = ["subnet1_cidr", "subnet2_cidr", "subnet3_cidr", "subnet4_cidr", "subnet5_cidr", "subnet6_cidr"]
 }
 
 
-variable "subnet2_cidr" {
-  type        = string
-  description = "Subnet 2 CIDR"
+variable "subnets" {
+  default = [
+    {
+      name          = "public-subnet-01"
+      cidr_block    = "192.168.1.0/28"
+      map_public_ip = true
+    },
+    {
+      name          = "public-subnet-02"
+      cidr_block    = "192.168.1.16/28"
+      map_public_ip = true
+    },
+    {
+      name          = "private-subnet-01"
+      cidr_block    = "192.168.1.32/28"
+      map_public_ip = false
+    },
+    {
+      name          = "private-subnet-02"
+      cidr_block    = "192.168.1.48/28"
+      map_public_ip = false
+    },
+    {
+      name          = "secure-subnet-01"
+      cidr_block    = "192.168.1.64/28"
+      map_public_ip = false
+    },
+    {
+      name          = "secure-subnet-02"
+      cidr_block    = "192.168.1.80/28"
+      map_public_ip = false
+    }
+  ]
 }
 
 
-variable "subnet3_cidr" {
-  type        = string
-  description = "Subnet 3 CIDR"
+variable "subnet_cidrs" {
+    type        = map(string)
+    description = "Map of CIDR blocks for subnets"
+
+    default = {
+      subnet1 = "subnet_cidr1"
+      subnet2 = "subnet_cidr2"
+      subnet3 = "subnet_cidr3"
+      subnet4 = "subnet_cidr4"
+      subnet5 = "subnet_cidr5"
+      subnet6 = "subnet_cidr6"
+    }
+    # default = ["subnet3_cidr", "subnet4_cidr", "subnet5_cidr", "subnet6_cidr"]
 }
-
-
-variable "subnet4_cidr" {
-  type        = string
-  description = "Subnet 4 CIDR"
-}
-
-
-variable "subnet5_cidr" {
-  type        = string
-  description = "Subnet 5 CIDR"
-}
-
-
-variable "subnet6_cidr" {
-  type        = string
-  description = "Subnet 6 CIDR"
-}
-

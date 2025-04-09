@@ -28,6 +28,43 @@ variable "subnet_cidr" {
 
 variable "subnets" {
   default = [
+    # {
+    #   name          = "public-subnet-01"
+    #   cidr_block    = "192.168.1.0/28"
+    #   map_public_ip = true
+    # },
+    # {
+    #   name          = "public-subnet-02"
+    #   cidr_block    = "192.168.1.16/28"
+    #   map_public_ip = true
+    # },
+    # {
+    #   name          = "private-subnet-01"
+    #   cidr_block    = "192.168.1.32/28"
+    #   map_public_ip = false
+    # },
+    # {
+    #   name          = "private-subnet-02"
+    #   cidr_block    = "192.168.1.48/28"
+    #   map_public_ip = false
+    # },
+    {
+      name          = "secure-subnet-01"
+      cidr_block    = "192.168.1.64/28"
+      map_public_ip = false
+    },
+    {
+      name          = "secure-subnet-02"
+      cidr_block    = "192.168.1.80/28"
+      map_public_ip = false
+    }
+  ]
+}
+
+
+
+variable "public_subnets" {
+  default = [
     {
       name          = "public-subnet-01"
       cidr_block    = "192.168.1.0/28"
@@ -37,7 +74,12 @@ variable "subnets" {
       name          = "public-subnet-02"
       cidr_block    = "192.168.1.16/28"
       map_public_ip = true
-    },
+    }
+  ]
+}
+
+variable "private_subnets" {
+  default = [
     {
       name          = "private-subnet-01"
       cidr_block    = "192.168.1.32/28"
@@ -46,16 +88,6 @@ variable "subnets" {
     {
       name          = "private-subnet-02"
       cidr_block    = "192.168.1.48/28"
-      map_public_ip = false
-    },
-    {
-      name          = "secure-subnet-01"
-      cidr_block    = "192.168.1.64/28"
-      map_public_ip = false
-    },
-    {
-      name          = "secure-subnet-02"
-      cidr_block    = "192.168.1.80/28"
       map_public_ip = false
     }
   ]
@@ -75,4 +107,9 @@ variable "subnet_cidrs" {
       subnet6 = "subnet_cidr6"
     }
     # default = ["subnet3_cidr", "subnet4_cidr", "subnet5_cidr", "subnet6_cidr"]
+}
+
+variable "public_ip_address" {
+    type        = string
+    description = "Public IP address"
 }

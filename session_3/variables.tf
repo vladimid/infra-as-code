@@ -14,7 +14,8 @@ variable "vpc_cidr" {
   description = "VPC CIDR"
 }
 
-variable "subnet1_cidr" {
-  type        = string
-  description = "Public subnet 1 CIDR"
+
+variable "subnets" {
+  type        = list(any)
+  description = "Public subnets"
 }

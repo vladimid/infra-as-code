@@ -34,7 +34,7 @@ resource "aws_ecs_service" "this" {
   health_check_grace_period_seconds  = 60
 
   network_configuration {
-    security_groups  = [aws_security_group.ecs.id]
+    security_groups  = [aws_security_group.lb_sg.id]
     subnets          = aws_subnet.private_subnets[*].id
     assign_public_ip = false
   }
@@ -69,27 +69,3 @@ resource "aws_ecs_task_definition" "this" {
     region           = var.region
   })
 }
-
-resource "aws_security_group" "ecs" {
-  name   = format("%s-ecs-sg", var.prefix)
-  vpc_id = aws_vpc.main.id
-
-  ingress {
-    description     = "Allow ALB access to ECS on port 8000"
-    from_port       = 8000
-    to_port         = 8000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.lb_sg.id]
-  }
-
-  egress {
-    description      = "Allow outgoing traffic"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-}
-

@@ -5,6 +5,12 @@ variable "prefix" {
   description = "Prefix"
 }
 
+variable "repo_prefix" {
+  type        = string
+  description = "Prefix for the repository only"
+}
+
+
 variable "region" {
   type        = string
   description = "Region"
@@ -17,51 +23,12 @@ variable "vpc_cidr" {
 }
 
 
-variable "subnet_cidr" {
-  type        = list(string)
-  description = "List of CIDR blocks for public subnets"
-
-  default = ["subnet_cidr1", "subnet_cidr2"]
-  # default = ["subnet1_cidr", "subnet2_cidr", "subnet3_cidr", "subnet4_cidr", "subnet5_cidr", "subnet6_cidr"]
-}
-
-
 variable "subnets" {
-  default = [
-    # {
-    #   name          = "public-subnet-01"
-    #   cidr_block    = "192.168.1.0/28"
-    #   map_public_ip = true
-    # },
-    # {
-    #   name          = "public-subnet-02"
-    #   cidr_block    = "192.168.1.16/28"
-    #   map_public_ip = true
-    # },
-    # {
-    #   name          = "private-subnet-01"
-    #   cidr_block    = "192.168.1.32/28"
-    #   map_public_ip = false
-    # },
-    # {
-    #   name          = "private-subnet-02"
-    #   cidr_block    = "192.168.1.48/28"
-    #   map_public_ip = false
-    # },
-    {
-      name          = "secure-subnet-01"
-      cidr_block    = "192.168.1.64/28"
-      map_public_ip = false
-    },
-    {
-      name          = "secure-subnet-02"
-      cidr_block    = "192.168.1.80/28"
-      map_public_ip = false
-    }
-  ]
+    type        = list(object({
+        az   = string
+        cidr = string
+    }))
 }
-
-
 
 variable "public_subnets" {
   default = [
@@ -93,7 +60,20 @@ variable "private_subnets" {
   ]
 }
 
-
+variable secure_subnets {
+  default = [
+    {
+      name          = "secure-subnet-01"
+      cidr_block    = "192.168.1.64/28"
+      map_public_ip = false
+    },
+    {
+      name          = "secure-subnet-02"
+      cidr_block    = "192.168.1.80/28"
+      map_public_ip = false
+    }
+  ]
+}
 variable "subnet_cidrs" {
     type        = map(string)
     description = "Map of CIDR blocks for subnets"

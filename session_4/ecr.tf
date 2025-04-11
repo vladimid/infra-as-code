@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "api" {
-  name                 = "${var.prefix}-crud-app"
+  name                 = lower("${var.prefix}-crud-app")
   force_delete         = true
   image_tag_mutability = "MUTABLE"
 
@@ -8,7 +8,7 @@ resource "aws_ecr_repository" "api" {
   }
 
   tags = {
-    Name        = "${var.prefix}-crud-app"
+    Name        = lower("${var.prefix}-crud-app")
     ManagedBy   = "Terraform"
     Project     = var.prefix
     Environment = "Dev"
